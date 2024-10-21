@@ -88,6 +88,10 @@ function nextQuestion() {
         loadQuestion();
     } else {
         document.getElementById("quiz-container").innerHTML = "<h2>퀴즈가 끝났습니다!</h2>";
+function goToNextPage() {
+    window.location.href = 'next_page.html'; // 또는 다음 페이지 경로
+}
+   
     }
 }
 
