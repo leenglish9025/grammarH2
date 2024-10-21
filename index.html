@@ -1,31 +1,113 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grammar Quiz</title>
-    <link rel="stylesheet" href="style.css">
+    <title>고2 문법 퀴즈</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .quiz-container {
+            text-align: center;
+        }
+        .question {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .answers {
+            display: flex;
+            flex-direction: column;
+        }
+        .answers button {
+            padding: 10px;
+            margin: 5px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .answers button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>고2 문법 퀴즈</h1>
-        <div id="quiz-container">
-            <!-- 문제와 선택지 -->
-            <div class="quiz">
-                <h2 id="question"></h2>
-                <ul id="choices">
-                    <li><button onclick="checkAnswer(0)">1. <span id="choice0"></span></button></li>
-                    <li><button onclick="checkAnswer(1)">2. <span id="choice1"></span></button></li>
-                    <li><button onclick="checkAnswer(2)">3. <span id="choice2"></span></button></li>
-                    <li><button onclick="checkAnswer(3)">4. <span id="choice3"></span></button></li>
-                </ul>
-                <div id="feedback"></div>
-                <button id="next-btn" onclick="nextQuestion()">다음 문제</button>
-                <button onClick="goToNextPage()">1</button>
-            </div>
-        </div>
+    <div class="quiz-container">
+        <div id="question" class="question"></div>
+        <div class="answers" id="answers"></div>
+        <button id="next-btn" style="display:none; margin-top: 20px;">다음 문제로</button>
     </div>
 
-    <script src="quiz.js"></script>
+    <script>
+        const quizData = [
+            {
+                question: "Emily sat silently, with the dog __________ at her feet.",
+                answers: ["dozing", "dozed", "doze", "does"],
+                correct: "dozing"
+            },
+            {
+                question: "By the time I finish that, I __________ the basics of genetic engineering.",
+                answers: ["will learn", "will be learning", "will have learned", "learn"],
+                correct: "will have learned"
+            },
+            // 여기서 나머지 8개의 문제들을 추가하세요.
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        function loadQuestion() {
+            const currentQuestion = quizData[currentQuestionIndex];
+            const questionElement = document.getElementById('question');
+            const answersElement = document.getElementById('answers');
+            const nextBtn = document.getElementById('next-btn');
+
+            questionElement.innerText = currentQuestion.question;
+            answersElement.innerHTML = '';
+
+            currentQuestion.answers.forEach(answer => {
+                const button = document.createElement('button');
+                button.innerText = answer;
+                button.addEventListener('click', () => checkAnswer(answer));
+                answersElement.appendChild(button);
+            });
+
+            nextBtn.style.display = 'none';
+        }
+
+        function checkAnswer(selectedAnswer) {
+            const currentQuestion = quizData[currentQuestionIndex];
+            const nextBtn = document.getElementById('next-btn');
+
+            if (selectedAnswer === currentQuestion.correct) {
+                alert('정답입니다!');
+                score++;
+            } else {
+                alert(`오답입니다. 정답은 ${currentQuestion.correct} 입니다.`);
+            }
+
+            currentQuestionIndex++;
+
+            if (currentQuestionIndex < quizData.length) {
+                nextBtn.style.display = 'block';
+            } else {
+                document.getElementById('question').innerText = `퀴즈 완료! 당신의 점수는 ${score}/${quizData.length} 입니다.`;
+                document.getElementById('answers').innerHTML = '';
+                nextBtn.style.display = 'none';
+            }
+        }
+
+        document.getElementById('next-btn').addEventListener('click', loadQuestion);
+
+        // 첫 번째 문제 바로 로드
+        loadQuestion();
+    </script>
 </body>
 </html>
