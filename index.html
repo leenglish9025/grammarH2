@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grammar Quiz</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>고2 문법 퀴즈</h1>
+        <div id="quiz-container">
+            <!-- 문제와 선택지 -->
+            <div class="quiz">
+                <h2 id="question"></h2>
+                <ul id="choices">
+                    <li><button onclick="checkAnswer(0)">1. <span id="choice0"></span></button></li>
+                    <li><button onclick="checkAnswer(1)">2. <span id="choice1"></span></button></li>
+                    <li><button onclick="checkAnswer(2)">3. <span id="choice2"></span></button></li>
+                    <li><button onclick="checkAnswer(3)">4. <span id="choice3"></span></button></li>
+                </ul>
+                <div id="feedback"></div>
+                <button id="next-btn" onclick="nextQuestion()">다음 문제</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="quiz.js"></script>
+</body>
+</html>
